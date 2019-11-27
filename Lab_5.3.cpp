@@ -2,106 +2,107 @@
 #include <math.h>
 #include <cmath>
 
-#define  height 5;
-#define width 5;
+const int n = 5;
+const int m = 5;
 
 using namespace std;
 
-class array
+class Array
 {
 private:
-	double arrW[width];
+	double ArrW[m];
 public:
-	friend void inputArray(array arrH[]);
-	friend void outputArray(array arrH[]);
-	friend void sortArray(array arrH[], int height);
-	friend void calcArray(array arrH[]);
+	friend void InputArray(Array arrH[]);
+	friend void OutputArray(Array arrH[]);
+	friend void SortArray(Array arrH[], int n);
+	friend void CalcArray(Array arrH[]);
 };
 
-void inputArray(array  arrH[])
+void InputArray(Array  arrH[])
 {
-	for (int i = 0; i < height; i++)
-		for (int j = 0; j < width; j++)
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
 		{
 			cout << "[" << i + 1 << "][" << j + 1 << "] = ";
-			cin >> arrH[i].arrW[j];
+			cin >> arrH[i].ArrW[j];
 		}
 }
-void outputArray(array  arrH[])
+void OutputArray(Array  ArrH[])
 {
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int j = 0; j < m; j++)
 		{
-			cout << arrH[i].arrW[j] << "\t";
+			cout << ArrH[i].ArrW[j] << "\t";
 		}
 		cout << endl;
 	}
 }
-void sortArray(array  arrH[], int height)
+void SortArray(Array  arrH[], int n)
 {
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < n; i++)
 	{
-		for (int blockSizeIterator = 1; blockSizeIterator < height; blockSizeIterator *= 2)
+		for (int BlockSizeIterator = 1; BlockSizeIterator < n; BlockSizeIterator *= 2)
 		{
-			for (int blockIterator = 0; blockIterator < n - blockSizeIterator; blockIterator += 2 * blockSizeIterator)
+			for (int BlockIterator = 0; BlockIterator < n - BlockSizeIterator; BlockIterator += 2 * BlockSizeIterator)
 			{
-				int leftBlockIterator = 0;
-				int rightBlockIterator = 0;
-				int leftBorder = blockIterator;
-				int midBorder = blockIterator + blockSizeIterator;
-				int RightBorder = blockIterator + 2 * blockSizeIterator;
-				rightBorder = (rightBorder < height) ? rightBorder : height;
-				int* sortedBlock = new int[rightBorder - leftBorder];
-				while (leftBorder + leftBlockIterator < midBorder && midBorder + rightBlockIterator < rightBorder)
+				int LeftBlockIterator = 0;
+				int RightBlockIterator = 0;
+				int LeftBorder = BlockIterator;
+				int MidBorder = BlockIterator + BlockSizeIterator;
+				int RightBorder = BlockIterator + 2 * BlockSizeIterator;
+				RightBorder = (RightBorder < n) ? RightBorder : n;
+				int* SortedBlock = new int[RightBorder - LeftBorder];
+				while (LeftBorder + LeftBlockIterator < MidBorder && MidBorder + RightBlockIterator < RightBorder)
 				{
-					if (arrH[leftBorder + leftBlockIterator].arrW[i] > arrH[midBorder + rightBlockIterator].arrW[i])
+					if (arrH[LeftBorder + LeftBlockIterator].ArrW[i] > arrH[MidBorder + RightBlockIterator].ArrW[i])
 					{
-						sortedBlock[leftBlockIterator + rightBlockIterator] = arrH[leftBorder + leftBlockIterator].arrW[i];
-						leftBlockIterator++;
+						SortedBlock[LeftBlockIterator + RightBlockIterator] = arrH[LeftBorder + LeftBlockIterator].ArrW[i];
+						LeftBlockIterator++;
 					}
 					else
 					{
-						sortedBlock[leftBlockIterator + rightBlockIterator] = arrH[midBorder + rightBlockIterator].arrW[i];
-						rightBlockIterator++;
+						SortedBlock[LeftBlockIterator + RightBlockIterator] = arrH[MidBorder + RightBlockIterator].ArrW[i];
+						RightBlockIterator++;
 					}
 				}
-				while (leftBorder + leftBlockIterator < midBorder)
+				while (LeftBorder + LeftBlockIterator < MidBorder)
 				{
-					sortedBlock[leftBlockIterator + rightBlockIterator] = arrH[leftBorder + leftBlockIterator].arrW[i];
-					leftBlockIterator++;
+					SortedBlock[LeftBlockIterator + RightBlockIterator] = arrH[LeftBorder + LeftBlockIterator].ArrW[i];
+					LeftBlockIterator++;
 				}
-				while (midBorder + rightBlockIterator < rightBorder)
+				while (MidBorder + RightBlockIterator < RightBorder)
 				{
-					sortedBlock[leftBlockIterator + rightBlockIterator] = arrH[midBorder + rightBlockIterator].arrW[i];
-					rightBlockIterator++;
+					SortedBlock[LeftBlockIterator + RightBlockIterator] = arrH[MidBorder + RightBlockIterator].ArrW[i];
+					RightBlockIterator++;
 				}
 
-				for (int mergeIterator = 0; lergeIterator < leftBlockIterator + rightBlockIterator; mergeIterator++)
+				for (int MergeIterator = 0; MergeIterator < LeftBlockIterator + RightBlockIterator; MergeIterator++)
 				{
-					arrH[leftBorder + mergeIterator].arrW[i] = sortedBlock[mergeIterator];
+					arrH[LeftBorder + MergeIterator].ArrW[i] = SortedBlock[MergeIterator];
 				}
-				delete sortedBlock;
+				delete SortedBlock;
 
 			}
 
 		}
 	}
 }
-void calcArray(Array arrH[])
+void CalcArray(Array arrH[])
 {
 	double summ = 0.0;
+	float f;
 	int i, j;
 	float sum = 0.0;
-	
+
 	for (j = 0; j < 5; ++j)
 	{
 		int minElem = 10000;
-		for ( i = 0; i < 5; ++i)
+		for (i = 0; i < 5; ++i)
 		{
-			if (arrH[i].arrW[j] < minElem)
+			if (arrH[i].ArrW[j] < minElem)
 			{
-				minElem = arrH[i].arrW[j];	
+				minElem = arrH[i].ArrW[j];
 			}
 		}
 		cout << "min elem";
@@ -115,14 +116,14 @@ void calcArray(Array arrH[])
 
 int main() {
 	cout << "Enter elements of matrix:\n" << endl;
-	Array arr[height];
-	inputArray(arr);
+	Array arr[n];
+	InputArray(arr);
 	cout << "\nYour matrix:\n" << endl;
-	outputArray(arr);
-	sortArray(arr, 5);
+	OutputArray(arr);
+	SortArray(arr, 5);
 	cout << "\nSorted matrix:\n" << endl;
-	outputArray(arr);
+	OutputArray(arr);
 	cout << "\nCalculations:\n" << endl;
-	calcArray(arr);
+	CalcArray(arr);
 	return 0;
 }
